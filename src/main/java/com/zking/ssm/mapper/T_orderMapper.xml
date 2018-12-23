@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.ssm.mapper.T_orderMapper" >
+  <resultMap id="BaseResultMap" type="com.zking.ssm.model.T_order" >
+    <constructor >
+      <idArg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap> <resultMap id="toone" type="com.zking.ssm.model.T_order" >
+   <id property="orderId" column="order_id"></id>
+  <result property="orderNo" column="order_no"/>
+  <result property="cid" column="cid"/>
+  <collection property="t_customer" javaType="com.zking.ssm.model.T_customer">
+    <id property="customerId" column="customer_id"></id>
+    <result property="customerName" column="customer_name"></result>
+  </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_no, cid
+  </sql>
+  <select id="query" resultMap="toone">
+  SELECT *FROM  Test_order d,t_customer c WHERE d.cid=c.customer_id
+  and d.order_id=#{orderid}
+  </select>
+
+</mapper>
